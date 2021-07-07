@@ -23,8 +23,8 @@ length(unique(df_uk$CustomerID))
 
 #The 'grep' and 'grepl' functions.
 x <- c('Anna','Emma','Erica','Alok','Sterling')
-grep('e',x) #The 'grep' function gives the index no. of the position where it finds an exact match.
-grepl('e',x) #The 'grepl' function gives a logical vector of TRUE/FALSE depending whether it finds an exact match or not.
+grep('E',x) #The 'grep' function gives a vector having index no. of the position where it finds an exact match.
+grepl('E',x) #The 'grepl' function gives a logical vector of TRUE/FALSE depending whether it finds an exact match or not.
 
 #Subset the dataframe on those rows which has a cancel invoice i.e. column 'InvoiceNo' starts with a 'C'.
 uk1 <- df_uk[grep('C',df_uk$InvoiceNo),]
@@ -61,6 +61,29 @@ head(purchased)
 #Calculate the most recent purchase done by each customer.
 recent <- aggregate(DaysPast~CustomerID,purchased,min,na.rm=TRUE)
 head(recent)
+
+df_invoices <- df_uk[c('CustomerID','InvoiceNo','Purchased')]
+head(df_invoices)
+df_invoices <- df_invoices[!duplicated(df_invoices),]  #Remove duplicate rows from the dataframe.
+df_invoices <- df_invoices[order(df_invoices$CustomerID),]
+head(df_invoices)
+row.names(df_invoices)<- NULL #Remove unnecessary row names from the dataframe.
+head(df_invoices)
+
+#Calculating the no. of purchases made by each Customer.
+df_freq <- aggregate(Purchased~CustomerID,df_invoices,sum)
+head(df_freq)
+names(df_freq)[names(df_freq)=='Purchased'] <- 'Frequency' #Rename the column as 'Frequency'.
+head(df_freq)
+
+#Merge the frequency dataframe with the customer dataframe by key 'CustomerID'.
+List_Customers <- merge(customer_list,df_freq,by='CustomerID',sort=TRUE,all=TRUE)
+head(List_Customers)
+
+table(List_Customers$Frequency)
+
+#Subset those rows where customers purchased atleast 1 item.
+df_customers <- List_Customers[List_Customers$Frequency>0,]
 
 #The 'aggregate' function.
 head(mtcars)
