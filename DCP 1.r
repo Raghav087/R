@@ -84,3 +84,8 @@ out_list[[4]]<-location   #Add a new vector as 4th object to the list. Notice th
 out_list
 out_list[[4]][5]<-'Varanasi'  #Add a new element at 5th position for the 4th object of the list.
 out_list
+
+#Create bins/groups on a numeric column.
+bins <- c(1,2.5,4,5.5,7)
+Petal_length_bins <- cut(iris$Petal.Length,breaks=bins)
+table(Petal_length_bins)

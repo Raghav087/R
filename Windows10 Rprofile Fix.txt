@@ -1,0 +1,5 @@
+By default, Windows 10 installs packages in OneDrive folder which is annoying.
+The given URL link has a fix to change the default OneDrive location to a local folder location.
+https://medium.com/@ValidScience/how-to-fix-rstudios-package-installation-on-windows-10-c1e602bf3a1f
+
+This will resolve any issues/errors related to installation of packages and using its functions.

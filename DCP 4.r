@@ -102,5 +102,3 @@ mtcars[order(mtcars$drat),] #Here the 'order' function enables us to extract row
 #Hence the 1st row is the one having lowest value of 'drat' column, the 2nd row is the one having the 2nd lowest value and so on.
 #It therefore arranges the 'mtcars' dataframe based on increasing order of 'drat' column.
 mtcars[order(mtcars$drat,decreasing = TRUE),] #By giving the 'decreasing' option as value 'TRUE' it arranges the dataframe in decreasing order of 'drat' column.
-
-#To be continued from 'Data Extract and Prep.R'....

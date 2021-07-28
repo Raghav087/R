@@ -193,6 +193,8 @@ all(c(1,3,9) %in% c(1,2,3,4))
 
 sample(seq(1,20,0.1),20,replace = TRUE) #The function 'sample' takes 1st argument as a population from which to draw sample. 2nd argument is the no. of samples to be drawn.
                                         #3rd argument is whether we want sampling with or without replacement.
+sample(seq_len(30),7) #The function 'seq_len' creates a vector of values from 1 to 30. We then select a random sample of 7 from this vector.
+
 
 install.packages('tidyr')
 library(tidyr)
