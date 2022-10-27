@@ -66,7 +66,7 @@ df_f
 df_f1 <- cbind(df, df_new1)
 df_f1
 
-#Extract values from a dataframe by specifying criteria inside square brackets.
+#Performing filter operations on a dataframe by specifying criteria inside square brackets.
 df_f1[df_f1$state == "UP", ]  #All rows where 'state' has value 'UP' and all columns.
 df_f[df_f$emp_sal > 1500, ]  #All rows where 'emp_sal' is more than 1500 and all columns.
 df_f[df_f$emp_dept %in% c("IT", "HR"), ]  #All rows where 'emp_dept' has value 'IT' or 'HR' and all columns.
