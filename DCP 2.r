@@ -73,8 +73,10 @@ df_f[df_f$emp_dept %in% c("IT", "HR"), ]  #All rows where 'emp_dept' has value '
 df_f1[c('emp_name', 'emp_sal')]  #Extract only specified columns. Note how we haven't specified '$' sign and also didn't specify a comma. For simply column extraction, comma isn't a requirement.
 df_f1[c(1:4)] #We can also extract columns by simply providing the column indices. Again, no need for commas for only column extraction.
 df_f1[-c(1,3)] #Remove columns by specifying their indices.
+df_f2$state[df_f2$state == 'UP'] <- 'Bihar'  #Replace 'UP' with 'Bihar' under column 'state'.
 complete.cases(df_f1) #This function checks whether every row is complete or not(i.e. has no missing values) and returns a TRUE/FALSE value for each row.
 sum(complete.cases(df_f1)) #This gives no. of complete rows in our 'df_f1' dataframe.
+sum(!complete.cases(df_f1)) #This gives no. of rows having missing values in our dataframe.
 duplicated(df_f1) #This function checks whether each row is a duplicate or not and returns a TRUE/FALSE value for each row.
 sum(duplicated(df_f1)) #This gives no. of duplicate rows in our 'df_f1' dataframe.
 df_f1[complete.cases(df_f1),] #Extract only those rows which are complete.
