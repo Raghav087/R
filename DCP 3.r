@@ -8,7 +8,7 @@ library(caret)
 library(plyr)
 library(dplyr)
 
-loan_df <- read.csv('F:/Study/IIML Sessions/R Codes/Code files & Others/loan_data_set.csv')
+loan_df <- read.csv('F:/IIML Sessions/R Codes/Code files & Others/loan_data_set.csv')
 head(loan_df)
 loan_df1 <- loan_df[-1] #Remove column with index 1 i.e. 'Loan_ID'.
 head(loan_df1)
@@ -23,7 +23,7 @@ sum(rowSums(is.na(loan_df1))==0) #Calculate no. of rows having non-missing value
 
 table(loan_df1$Credit_History) #We use 'table' function to see the counts/occurance of each value of 'Credit_History' column in a tabular format.
 loan_df1$Credit_History[is.na(loan_df1$Credit_History)]<-1 #As we already know that 'Credit_History' column has missing values, we replace them by 1.
-loan_df1$LoanAmount[is.na(loan_df1$LoanAmount)]<-median(Loan_df1$LoanAmount,na.rm = TRUE) #We replace the missing values in column 'LoanAmount' by the median of the column calculated by excluding the missing values.
+loan_df1$LoanAmount[is.na(loan_df1$LoanAmount)]<-median(loan_df1$LoanAmount,na.rm = TRUE) #We replace the missing values in column 'LoanAmount' by the median of the column calculated by excluding the missing values.
 loan_df1$Gender<-ifelse(loan_df1$Gender=='Male',1,0) #The 'ifelse' function has 1st argument as the 'if' condition. The 2nd argument is the 'then' condition while 3rd the 'else' condition.
 table(loan_df1$Gender) #Now the 'Male' and 'Female' values have been recoded as 1 and 0.
 
@@ -33,6 +33,10 @@ skewness(loan_df1$ApplicantIncome) #Measure the skewness on the selected column 
 skewness(loan_df1$CoapplicantIncome)
 loan_df1$LogApplicantIncome <- log(loan_df1$ApplicantIncome) #Transform the column values by taking log.
 skewness(loan_df1$LogApplicantIncome) #The skewness in the transformed column is much lesser now after taking log transformation.
+# If Skewness < -1 or > 1 then distribution is highly skewed.
+# If -1 < Skewness < -0.5 0r 0.5 < Skewness < 1 then distribution is moderately skewed.
+# If -0.5 < Skewness < 0.5 then distribution is approximately normal.
+
 
 #Standardize the columns having different scales.
 #As a definition, standardizing a variable X means calculating z-score for each of its values x i.e. z = (x-mean(X))/sd(X)
