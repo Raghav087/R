@@ -1,4 +1,4 @@
-df_1 <- read.csv('F:/Study/IIML Sessions/R Codes/Code files & Others/Online_Retail.csv')
+df_1 <- read.csv('F:/IIML Sessions/R Codes/Code files & Others/Online_Retail.csv')
 head(df_1)
 dim(df_1)
 
@@ -79,11 +79,8 @@ head(df_freq)
 #Merge the frequency dataframe with the customer dataframe by key 'CustomerID'.
 List_Customers <- merge(customer_list,df_freq,by='CustomerID',sort=TRUE,all=TRUE)
 head(List_Customers)
-
+List_Customers$Frequency <- ifelse(List_Customers$Purchased >= 50, 'Frequent', ifelse(List_Customers$Purchased >= 10, 'Moderate', 'Rare'))
 table(List_Customers$Frequency)
-
-#Subset those rows where customers purchased atleast 1 item.
-df_customers <- List_Customers[List_Customers$Frequency>0,]
 
 #The 'aggregate' function.
 head(mtcars)
