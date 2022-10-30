@@ -50,7 +50,7 @@ t3 <- as.table(m1)
 t3
 chisq.test(t3) #We get a warning 'Chi-squared approximation may be incorrect' as 1 or more cell values in contingency table is < 5.
 
-
+library(tidyr)
 
 #ANALYSIS OF VARIANCE(ANOVA)
 head(iris)
@@ -68,19 +68,37 @@ summary(f1)
 #for each level of 'Species' column.
 
 #Two-Way ANOVA
-#Here the values of a numeric variable(dependent) are affected by levels of two categorical variable. The levels of one variable lie along
-#row while that of the other variable lie along the column in contingency table format.
-#We have two types of 2-Way ANOVA - with replication and without replication.
-#Following are the 3 null hypothesis we construct in Two-Way ANOVA :
+#Here the values of a numeric variable(dependent) are affected by levels of two categorical variable. The levels of one variable lie along row while that of the other variable lie along the column
+#in contingency table format. We have two types of 2-Way ANOVA - with replication and without replication. Following are the 3 null hypothesis we construct in Two-Way ANOVA :
 #Ho1 : All levels of Row Factor have same effect on dependent variable.(Mean of all row levels is equal)
 #Ho2 : All levels of Column Factor have same effect on dependent variable.(Mean of all column levels is equal)
-#Ho3 : There is no interaction effect between Factor A and Factor B. Hence each combination of levels of both has same effect on
-#      dependent variable.(This hypothesis is ONLY applicable for ANOVA with replication.)
+#Ho3 : There is no interaction effect between Factor A and Factor B. Hence each combination of levels of both has same effect on dependent variable.(This hypothesis is ONLY applicable for ANOVA with replication.)
 
+#A. Without Replication
+Wheat <- c(123, 145, 156)
+Corn <- c(138, 165, 176)
+Soy <- c(110, 140, 185)
+Rice <- c(151, 167, 175)
+Fertilizer <- c('X', 'Y', 'Z')
+d1 <- data.frame(Fertilizer, Wheat, Corn, Soy, Rice)
+d1
+d2 <- gather(d1, 'Crop_Type', 'Yield', 2:5)
+d2  #Created a long format dataframe required for ANOVA analysis in R.
+output <- aov(Yield ~ Fertilizer + Crop_Type, data = d2)
+summary(output)
+#From the result, we conclude that there is statistically significant difference in yields for different fertilizers(Row Factor) as p-value = 0.0068 < 0.05.
+#Also, there is no statistically significant difference in yields for different crop types(Column Factor) as p-value = 0.144 > 0.05.
 
-
-
-
-
-head(ToothGrowth)
-?ToothGrowth
+#B. With Replication
+head(ToothGrowth,3)
+levels(ToothGrowth$supp)
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+levels(ToothGrowth$dose)
+op <- aov(len ~ supp * dose, data = ToothGrowth)
+summary(op)
+#We have one factor having 2 levels('supp') and other having 3 levels('dose'). When testing for significance of 'supp' variable, we conclude that both levels have statistically significant difference on values of
+#'len' variable. When testing for significance of 'dose' variable, we conclude that AT LEAST one level has a statistically significantly different impact on values of 'len' variable. Finally, there is statistically
+#significant proof that there exists an interaction between 'supp' and 'dose' variables i.e. each combination of levels of 'supp' and 'dose' variables has a different impact on values of 'len' variable and AT LEAST
+#one of those combinations is statitically significantly different from other combinations. To test all of this we use Tukey HSD test.
+tukey <- TukeyHSD(op)
+print(tukey)
